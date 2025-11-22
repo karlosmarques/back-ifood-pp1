@@ -30,7 +30,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         
                         
-                        // Todos os outros endpoints exigem autenticação
+                        
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
