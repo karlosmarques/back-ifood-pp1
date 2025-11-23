@@ -14,7 +14,7 @@ import com.ifood.ifood_java.service.perfil.PerfilService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/perfil")
+@RequestMapping("perfil")
 @CrossOrigin
 public class PerfilController {
 
@@ -23,16 +23,16 @@ public class PerfilController {
 
 
     @GetMapping
-    public ResponseEntity<UsuarioRequest>pegarPerfil() {
+    public ResponseEntity<MostrarPerfilRequest>pegarPerfil() {
         try {
-            UsuarioRequest perfil = perfilService.pegarPerfil();
+            MostrarPerfilRequest perfil = perfilService.pegarPerfil();
             return ResponseEntity.ok(perfil);
         } catch (RuntimeException e) {
             return ResponseEntity.status(401).build();
         }
     }
 
-    @PutMapping
+    @PatchMapping
     public ResponseEntity<?> atualizarPerfil(@Valid @RequestBody AtualizarPerfilRequest request) {
         try {
             AtualizarPerfilRequest atualizado = perfilService.atualizarPerfil(request);
