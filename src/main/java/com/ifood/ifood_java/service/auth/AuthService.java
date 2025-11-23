@@ -1,8 +1,8 @@
 package com.ifood.ifood_java.service.auth;
 import com.ifood.ifood_java.entity.usuario.UsuarioRequest;
 import com.ifood.ifood_java.infra.security.TokenService;
-import com.ifood.ifood_java.entity.usuario.LoginRequest;
-import com.ifood.ifood_java.entity.usuario.ResponseLoginRequest;
+import com.ifood.ifood_java.controller.auth.LoginRequest;
+import com.ifood.ifood_java.controller.auth.ResponseLoginRequest;
 import com.ifood.ifood_java.entity.usuario.Usuario;
 import com.ifood.ifood_java.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;

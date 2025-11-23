@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ifood.ifood_java.entity.usuario.LoginRequest;
-import com.ifood.ifood_java.entity.usuario.ResponseLoginRequest;
 import com.ifood.ifood_java.entity.usuario.Usuario;
 import com.ifood.ifood_java.entity.usuario.UsuarioRequest;
 import com.ifood.ifood_java.infra.security.TokenService;
