@@ -14,7 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AtualizarPerfilRequest {
     private String nome;
-    private LocalDate dtNascimento;
-    private String foneCelular;
+   private String email;
 }
 
