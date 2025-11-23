@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.ifood.ifood_java.controller.perfil.AtualizarPerfilRequest;
+import com.ifood.ifood_java.controller.perfil.MostrarPerfilRequest;
 import com.ifood.ifood_java.entity.usuario.Usuario;
 import com.ifood.ifood_java.entity.usuario.UsuarioRequest;
 import com.ifood.ifood_java.repository.UsuarioRepository;
@@ -18,7 +19,7 @@ public class PerfilService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public UsuarioRequest pegarPerfil() {
+    public MostrarPerfilRequest pegarPerfil() {
        
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
@@ -30,40 +31,30 @@ public class PerfilService {
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        return new UsuarioRequest(
+        return new MostrarPerfilRequest(
             usuario.getNome(),
-            usuario.getNome(),
-            usuario.getEmail(),
-            usuario.getCpf(),
-            usuario.getDtNascimento(),
-            usuario.getFoneCelular()
+            usuario.getEmail()
         );
+        
     }
     @Transactional
     public AtualizarPerfilRequest atualizarPerfil(AtualizarPerfilRequest request) {
     
-    Usuario usuario = usuarioRepository
-            .findByEmail(SecurityContextHolder.getContext()
-                    .getAuthentication()
-                    .getName())
+    Usuario usuario = usuarioRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
             .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-    if (request.getNome() != null && !request.getNome().isBlank()) {
+    if (request.getNome() != null) {
         usuario.setNome(request.getNome());
     }
-    if (request.getFoneCelular() != null) {
-        usuario.setFoneCelular(request.getFoneCelular());
+    if (request.getEmail() != null) {
+        usuario.setEmail(request.getEmail());
     }
-    if (request.getDtNascimento() != null) {
-        usuario.setDtNascimento(request.getDtNascimento());
-    }
-
+    
     Usuario atualizado = usuarioRepository.save(usuario);
     
     return new AtualizarPerfilRequest(
         atualizado.getNome(),
-        atualizado.getDtNascimento(),
-        atualizado.getFoneCelular()
+        atualizado.getEmail()
     );
 }
 }
