@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Endpoints públicos - TODOS COM BARRA NO INÍCIO!
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/perfil/**").permitAll()
                         
                         
                         
