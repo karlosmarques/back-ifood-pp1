@@ -5,7 +5,7 @@ import javax.print.DocFlavor.STRING;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.ifood.ifood_java.entity.usuario.UsuarioRequest;
 import com.ifood.ifood_java.repository.UsuarioRepository;
 import com.ifood.ifood_java.service.perfil.PerfilService;
@@ -14,7 +14,8 @@ import com.ifood.ifood_java.service.perfil.PerfilService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("perfil")
+@RequestMapping("/perfil")
+@CrossOrigin
 public class PerfilController {
 
     @Autowired
