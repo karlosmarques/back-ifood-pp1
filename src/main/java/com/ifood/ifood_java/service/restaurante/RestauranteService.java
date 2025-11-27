@@ -1,5 +1,7 @@
 package com.ifood.ifood_java.service.restaurante;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class RestauranteService {
 
     @Autowired UsuarioRepository usuarioRepository;
 
-   public RestauranteRequest criarRestaurante(RestauranteRequest request) {
+   public Restaurante criarRestaurante(RestauranteRequest request) {
     
     Long userId = Long.parseLong(
         SecurityContextHolder.getContext().getAuthentication().getName()
@@ -37,7 +39,17 @@ public class RestauranteService {
   
     restauranteRepository.save(restaurante);
 
-    return request;
+    return restaurante;
 }
+
+public List<Restaurante> mostrarRestaurante() {
+
+    Long userId = Long.parseLong(
+        SecurityContextHolder.getContext().getAuthentication().getName()
+    );
+
+    return restauranteRepository.findAllByUsuarioIdUsuario(userId);
+}
+
 
 }
