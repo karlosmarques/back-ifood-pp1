@@ -49,7 +49,7 @@ public class AuthService {
     }
 
     
-    String token = tokenService.gerarToken(usuario.getEmail());
+    String token = tokenService.gerarToken(usuario);
 
     return new ResponseLoginRequest(
             token,

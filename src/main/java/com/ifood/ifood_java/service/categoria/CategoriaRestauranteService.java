@@ -1,3 +1,4 @@
+/* 
 package com.ifood.ifood_java.service.categoria;
 
 import java.util.List;
@@ -60,3 +61,4 @@ public class CategoriaRestauranteService {
         throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
     }
 }
+    */

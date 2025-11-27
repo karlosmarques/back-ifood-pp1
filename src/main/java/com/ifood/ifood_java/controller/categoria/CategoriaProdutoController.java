@@ -1,3 +1,4 @@
+/* 
 package com.ifood.ifood_java.controller.categoria;
 
 import java.util.List;
@@ -45,3 +46,4 @@ public class CategoriaProdutoController {
     }
     
 }
+*/

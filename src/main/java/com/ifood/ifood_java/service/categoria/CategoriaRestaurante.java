@@ -1,3 +1,5 @@
+
+/* 
 package com.ifood.ifood_java.service.categoria;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -24,3 +26,4 @@ public class CategoriaRestaurante {
     private String descricao;
     
 }
+*/

@@ -4,6 +4,9 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.ifood.ifood_java.entity.usuario.Usuario;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -17,11 +20,11 @@ public class TokenService {
     @Value("${jwt.expiration:86400000}")
     private Long expiration;
 
-    public String gerarToken(String email) {
+    public String gerarToken(Usuario usuario) {
         try {
             SecretKey key = Keys.hmacShaKeyFor(secret.getBytes());
             return Jwts.builder()
-                    .subject(email)
+                    .subject(String.valueOf((usuario.getIdUsuario())))
                     .issuedAt(new Date())
                     .expiration(new Date(System.currentTimeMillis() + expiration))
                     .signWith(key)

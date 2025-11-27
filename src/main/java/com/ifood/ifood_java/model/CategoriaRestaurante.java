@@ -1,3 +1,5 @@
+/* 
+
 package com.ifood.ifood_java.model;
 
 import jakarta.persistence.Entity;
@@ -45,3 +47,4 @@ public class CategoriaRestaurante {
     }
     
 }
+*/

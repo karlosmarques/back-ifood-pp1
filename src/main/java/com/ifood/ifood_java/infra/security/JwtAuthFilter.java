@@ -29,12 +29,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String token = header.substring(7);
             
             // Valida e extrai o email do token
-            String email = tokenService.validarToken(token);
+            String idUsuario = tokenService.validarToken(token);
             
-            if (email != null) {
+            if (idUsuario != null) {
                 // Cria a autenticação
                 UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(email, null, null);
+                        new UsernamePasswordAuthenticationToken(idUsuario, null, null);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 
                 // Define no contexto de segurança
