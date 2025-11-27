@@ -8,7 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +38,7 @@ public class Restaurante {
    @Column(name = "raio de entrega")
    private String raio_entrega;
 
-   @ManyToOne
+   @OneToOne
    @JoinColumn(name = "id_usuario", nullable = false) 
    private Usuario usuario;
 
