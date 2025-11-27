@@ -19,17 +19,15 @@ public class PerfilService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+
     public MostrarPerfilRequest pegarPerfil() {
        
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = Long.parseLong(
+        SecurityContextHolder.getContext().getAuthentication().getName()
+    );
         
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new RuntimeException("Usuário não autenticado");
-        }
-        String email = authentication.getName();
-
-        Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+         Usuario usuario = usuarioRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         return new MostrarPerfilRequest(
             usuario.getNome(),
@@ -40,7 +38,11 @@ public class PerfilService {
     @Transactional
     public AtualizarPerfilRequest atualizarPerfil(AtualizarPerfilRequest request) {
     
-    Usuario usuario = usuarioRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+       Long userId = Long.parseLong(
+        SecurityContextHolder.getContext().getAuthentication().getName()
+    );
+        
+         Usuario usuario = usuarioRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
     if (request.getNome() != null) {
