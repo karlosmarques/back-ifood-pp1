@@ -27,5 +27,9 @@ public class RestauranteRequest {
     @NotBlank(message = "raio de entrega é obrigatorio")
     private String raio_entrega;
 
+    private String descricao;
+
+    private Long categoriaId;
+
    
 }

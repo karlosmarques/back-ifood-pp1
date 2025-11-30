@@ -1,55 +1,48 @@
 package com.ifood.ifood_java.service.restaurante;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.ifood.ifood_java.entity.restaurante.Restaurante;
 import com.ifood.ifood_java.entity.restaurante.RestauranteRequest;
-import com.ifood.ifood_java.entity.usuario.Usuario;
+import com.ifood.ifood_java.entity.categoria.CategoriaRestaurante;
+import com.ifood.ifood_java.repository.CategoriaRestauranteRepository;
 import com.ifood.ifood_java.repository.RestauranteRepository;
-import com.ifood.ifood_java.repository.UsuarioRepository;
 
 @Service
 public class RestauranteService {
-    
-    @Autowired
-    private RestauranteRepository restauranteRepository;
 
-    @Autowired UsuarioRepository usuarioRepository;
+    private final RestauranteRepository restauranteRepository;
+    private final CategoriaRestauranteRepository categoriaRepo;
 
-   public Restaurante criarRestaurante(RestauranteRequest request) {
-    
-    Long userId = Long.parseLong(
-        SecurityContextHolder.getContext().getAuthentication().getName()
-    );
+    public RestauranteService(
+        RestauranteRepository restauranteRepository,
+        CategoriaRestauranteRepository categoriaRepo
+    ) {
+        this.restauranteRepository = restauranteRepository;
+        this.categoriaRepo = categoriaRepo;
+    }
 
-    Usuario usuario = usuarioRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    public Restaurante criarRestaurante(RestauranteRequest request) {
 
-   
-    Restaurante restaurante = new Restaurante();
-    restaurante.setNome(request.getNome());
-    restaurante.setTelefone(request.getTelefone());
-    restaurante.setCnpj(request.getCnpj());
-    restaurante.setRaio_entrega(request.getRaio_entrega());
-    restaurante.setUsuario(usuario);
-  
-    restauranteRepository.save(restaurante);
+        Long categoriaId = request.getCategoriaId();
+        if (categoriaId == null) {
+            throw new IllegalArgumentException("categoriaId não pode ser nulo");
+        }
 
-    return restaurante;
-}
+        // Agora funciona corretamente
+        CategoriaRestaurante categoria = categoriaRepo.findById(categoriaId)
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
-public List<Restaurante> mostrarRestaurante() {
+        Restaurante r = new Restaurante();
+        r.setNome(request.getNome());
+        r.setRaio_entrega(request.getRaio_entrega());
+        // r.setDescricao(request.getDescricao());
+        r.setCategoria(categoria);
 
-    Long userId = Long.parseLong(
-        SecurityContextHolder.getContext().getAuthentication().getName()
-    );
+        return restauranteRepository.save(r);
+    }
 
-    return restauranteRepository.findAllByUsuarioIdUsuario(userId);
-}
-
-
+    public Object mostrarRestaurante() {
+        return restauranteRepository.findAll();
+    }
 }

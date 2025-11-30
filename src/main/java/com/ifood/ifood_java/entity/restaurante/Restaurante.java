@@ -1,5 +1,6 @@
 package com.ifood.ifood_java.entity.restaurante;
 
+import com.ifood.ifood_java.entity.categoria.CategoriaRestaurante;
 import com.ifood.ifood_java.entity.usuario.Usuario;
 
 import jakarta.persistence.Column;
@@ -8,7 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,5 +42,9 @@ public class Restaurante {
    @OneToOne
    @JoinColumn(name = "id_usuario", nullable = false) 
    private Usuario usuario;
+
+   @ManyToOne
+   @JoinColumn(name = "categoria_id")
+   private CategoriaRestaurante categoria;
 
 }

@@ -1,6 +1,6 @@
 package com.ifood.ifood_java.controller.restaurante;
 
-import javax.management.RuntimeErrorException;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class RestauranteController {
     private RestauranteService restauranteService;
 
    @PostMapping
-public ResponseEntity<Restaurante> criarRestaurante(@Valid @RequestBody RestauranteRequest request){
+    public ResponseEntity<Restaurante> criarRestaurante(@Valid @RequestBody RestauranteRequest request){
     Restaurante restaurante = restauranteService.criarRestaurante(request);
     return ResponseEntity.ok(restaurante);
 }
@@ -37,6 +37,7 @@ public ResponseEntity<Restaurante> criarRestaurante(@Valid @RequestBody Restaura
     var resultado = restauranteService.mostrarRestaurante();
         return ResponseEntity.ok(resultado);
     }
+
     
 }
 

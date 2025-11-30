@@ -1,10 +1,9 @@
 
-/* 
+
 package com.ifood.ifood_java.service.categoria;
 import org.hibernate.annotations.SQLRestriction;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+
 @Table(name = "CategoriaProduto")
 @SQLRestriction("habilitado = true")
 @Builder
@@ -26,4 +25,3 @@ public class CategoriaRestaurante {
     private String descricao;
     
 }
-*/

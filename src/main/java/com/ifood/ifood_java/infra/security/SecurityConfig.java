@@ -29,6 +29,7 @@ public class SecurityConfig {
                         // Endpoints públicos - TODOS COM BARRA NO INÍCIO!
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/perfil/**").permitAll()
+                        .requestMatchers("/home").permitAll()
                         
                         
                         

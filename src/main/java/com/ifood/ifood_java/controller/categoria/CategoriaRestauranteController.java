@@ -1,25 +1,16 @@
-/* 
 package com.ifood.ifood_java.controller.categoria;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.ifood.ifood_java.model.CategoriaRestaurante;
+import com.ifood.ifood_java.entity.categoria.CategoriaRestaurante;
 import com.ifood.ifood_java.service.categoria.CategoriaRestauranteService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/categorias/restaurantes")
 public class CategoriaRestauranteController {
 
-     private final CategoriaRestauranteService service;
+    private final CategoriaRestauranteService service;
 
     public CategoriaRestauranteController(CategoriaRestauranteService service) {
         this.service = service;
@@ -42,8 +33,6 @@ public class CategoriaRestauranteController {
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
-        service.delete(id);
+        service.deletar(id);
     }
-    
 }
-*/
