@@ -15,7 +15,7 @@ import com.ifood.ifood_java.entity.restaurante.Restaurante;
 import com.ifood.ifood_java.entity.restaurante.RestauranteRequest;
 import com.ifood.ifood_java.service.restaurante.RestauranteService;
 
-import jakarta.validation.Valid;
+
 
 @Controller
 @RequestMapping("restaurante")
@@ -26,7 +26,7 @@ public class RestauranteController {
     private RestauranteService restauranteService;
 
    @PostMapping
-public ResponseEntity<Restaurante> criarRestaurante(@Valid @RequestBody RestauranteRequest request){
+public ResponseEntity<Restaurante> criarRestaurante( @RequestBody RestauranteRequest request){
     Restaurante restaurante = restauranteService.criarRestaurante(request);
     return ResponseEntity.ok(restaurante);
 }
