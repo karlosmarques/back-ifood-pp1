@@ -1,5 +1,9 @@
 package com.ifood.ifood_java.entity.restaurante;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ifood.ifood_java.entity.produtos.Produtos;
 import com.ifood.ifood_java.entity.usuario.Usuario;
 
 import jakarta.persistence.Column;
@@ -8,7 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,11 +39,15 @@ public class Restaurante {
    @Column(name = "cnpj")
    private String cnpj;
 
-   @Column(name = "raio de entrega")
+   @Column(name = "raio_entrega")
    private String raio_entrega;
 
    @OneToOne
    @JoinColumn(name = "id_usuario", nullable = false) 
    private Usuario usuario;
+
+   @OneToMany(mappedBy = "restaurante")
+   @JsonIgnore
+   private List<Produtos> produtos;
 
 }
