@@ -1,6 +1,8 @@
-package com.ifood.ifood_java.entity.restaurante;
+package com.ifood.ifood_java.entity.produtos;
 
-import com.ifood.ifood_java.entity.categoria.CategoriaRestaurante;
+import java.math.BigDecimal;
+
+import com.ifood.ifood_java.entity.restaurante.Restaurante;
 import com.ifood.ifood_java.entity.usuario.Usuario;
 
 import jakarta.persistence.Column;
@@ -21,30 +23,26 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Restaurante {
+public class Produtos {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "id_restaurante")
-   private Long idRestaurante;
+   @Column(name = "id_produto")
+   private Long idProduto;
 
    @Column(name = "nome")
    private String nome;
 
-   @Column(name = "telefone")
-   private String telefone;
+   @Column(name = "descricao")
+   private String descricao;
 
-   @Column(name = "cnpj")
-   private String cnpj;
+   @Column(name = "preco")
+   private BigDecimal preco;
 
-   @Column(name = "raio_entrega")
-   private String raio_entrega;
-
-   @OneToOne
-   @JoinColumn(name = "id_usuario", nullable = false) 
-   private Usuario usuario;
+   @Column(name = "ativo")
+   private Boolean ativo;
 
    @ManyToOne
-   @JoinColumn(name = "categoria_id")
-   private CategoriaRestaurante categoria;
+   @JoinColumn(name = "id_restaurante", nullable = false)
+   private Restaurante restaurante;
 
 }

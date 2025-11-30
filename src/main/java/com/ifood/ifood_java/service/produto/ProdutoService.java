@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import com.ifood.ifood_java.entity.categoria.CategoriaProduto;
 import com.ifood.ifood_java.entity.produto.Produto;
 import com.ifood.ifood_java.entity.produto.ProdutoRequest;
+import com.ifood.ifood_java.entity.produtos.Produtos;
+import com.ifood.ifood_java.entity.produtos.ProdutosRequest;
 import com.ifood.ifood_java.repository.CategoriaProdutoRepository;
 import com.ifood.ifood_java.repository.ProdutoRepository;
 
@@ -37,6 +39,16 @@ public class ProdutoService {
 
     public Object listar() {
         return produtoRepo.findAll();
+    }
+
+    public Produtos criarPordutos(ProdutosRequest request) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'criarPordutos'");
+    }
+
+    public Object mostrarProdutos() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mostrarProdutos'");
     }
     
 }
