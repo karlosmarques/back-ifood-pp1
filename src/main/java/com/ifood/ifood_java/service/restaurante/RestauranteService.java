@@ -18,7 +18,8 @@ public class RestauranteService {
     @Autowired
     private RestauranteRepository restauranteRepository;
 
-    @Autowired UsuarioRepository usuarioRepository;
+    @Autowired 
+    private UsuarioRepository usuarioRepository;
 
    public Restaurante criarRestaurante(RestauranteRequest request) {
     
