@@ -1,5 +1,10 @@
 package com.ifood.ifood_java.entity.restaurante;
 
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ifood.ifood_java.entity.categoria.CategoriaRestaurante;
 import com.ifood.ifood_java.entity.usuario.Usuario;
 
@@ -21,6 +26,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Restaurante {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,12 +45,15 @@ public class Restaurante {
    @Column(name = "raio_entrega")
    private String raio_entrega;
 
-   @OneToOne
-   @JoinColumn(name = "id_usuario", nullable = false) 
-   private Usuario usuario;
-
    @ManyToOne
    @JoinColumn(name = "categoria_id")
+   @JsonIgnoreProperties("restaurantes")
    private CategoriaRestaurante categoria;
 
+   @OneToOne
+   @JoinColumn(name = "id_usuario", nullable = false) 
+   @JsonIgnore
+   private Usuario usuario;
+
+   
 }

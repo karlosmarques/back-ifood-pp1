@@ -7,4 +7,5 @@ import com.ifood.ifood_java.entity.categoria.CategoriaRestaurante;
 
 @Repository
 public interface CategoriaRestauranteRepository extends JpaRepository<CategoriaRestaurante, Long> {
+    
 }

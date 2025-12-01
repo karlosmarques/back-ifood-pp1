@@ -1,5 +1,7 @@
 package com.ifood.ifood_java.entity.restaurante;
 
+
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class RestauranteRequest {
 
     @NotBlank(message = "Nome do restaurante é obrigatório")

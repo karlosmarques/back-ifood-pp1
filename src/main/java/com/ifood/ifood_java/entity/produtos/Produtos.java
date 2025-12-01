@@ -2,16 +2,20 @@ package com.ifood.ifood_java.entity.produtos;
 
 import java.math.BigDecimal;
 
+import com.ifood.ifood_java.entity.categoria.CategoriaProdutos;
 import com.ifood.ifood_java.entity.restaurante.Restaurante;
 import com.ifood.ifood_java.entity.usuario.Usuario;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,5 +48,9 @@ public class Produtos {
    @ManyToOne
    @JoinColumn(name = "id_restaurante", nullable = false)
    private Restaurante restaurante;
+
+   @ManyToOne(cascade = CascadeType.PERSIST) // cascade para criar a categoria junto se não existir
+   @JoinColumn(name = "id_categoria")
+   private CategoriaProdutos categoria;
 
 }
