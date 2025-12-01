@@ -8,21 +8,25 @@ import com.ifood.ifood_java.dto.HomeResponse;
 import com.ifood.ifood_java.entity.categoria.CategoriaRestaurante;
 import com.ifood.ifood_java.entity.restaurante.Restaurante;
 import com.ifood.ifood_java.repository.CategoriaRestauranteRepository;
+import com.ifood.ifood_java.repository.PedidoRepository;
 import com.ifood.ifood_java.repository.RestauranteRepository;
 
 @Service
 public class HomeService {
 
     private final CategoriaRestauranteRepository categoriaRepo;
+    private final PedidoRepository pedidoRepo;
     private final RestauranteRepository restauranteRepo;
 
-    public HomeService(
-        CategoriaRestauranteRepository categoriaRepo,
-        RestauranteRepository restauranteRepo
-    ) {
-        this.categoriaRepo = categoriaRepo;
-        this.restauranteRepo = restauranteRepo;
-    }
+   public HomeService(
+    CategoriaRestauranteRepository categoriaRepo,
+    RestauranteRepository restauranteRepo,
+    PedidoRepository pedidoRepo
+) {
+    this.categoriaRepo = categoriaRepo;
+    this.restauranteRepo = restauranteRepo;
+    this.pedidoRepo = pedidoRepo;
+}
 
     public HomeResponse getHomeData() {
         List<CategoriaRestaurante> categorias = categoriaRepo.findAll();
