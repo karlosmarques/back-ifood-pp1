@@ -26,13 +26,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Endpoints públicos - TODOS COM BARRA NO INÍCIO!
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/perfil/**").permitAll()
                         .requestMatchers("/home").permitAll()
                         .requestMatchers("/categorias/restaurantes").permitAll()
-                        .requestMatchers("/restaurante").permitAll()
-                        
+                        .requestMatchers("/restaurante/**").permitAll()
+                        .requestMatchers("/produto/**").permitAll()
+                        .requestMatchers("/pedidos/**").permitAll()
                         
                         
                         .anyRequest().authenticated()
