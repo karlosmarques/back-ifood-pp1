@@ -44,8 +44,13 @@ public class ProdutoService {
     Restaurante restaurante = restauranteRepository.findByUsuario(usuario)
                 .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
 
-    CategoriaProdutos categoriaProdutos = categoriaProdutosRepository.findByNome(request.getNome())
-                .orElseThrow(() ->  new RuntimeException("Categoria não encontrada"));
+     CategoriaProdutos categoriaProdutos = categoriaProdutosRepository
+        .findByNome(request.getCategoria())
+        .orElseGet(() -> {
+            CategoriaProdutos nova = new CategoriaProdutos();
+            nova.setNome(request.getCategoria());
+            return categoriaProdutosRepository.save(nova);
+        });
 
         Produtos produtos = new Produtos();
         produtos.setNome(request.getNome());
