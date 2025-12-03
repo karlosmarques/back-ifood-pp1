@@ -2,6 +2,8 @@ package com.ifood.ifood_java.controller.restaurante;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,7 +22,7 @@ import jakarta.validation.Valid;
 
 
 @Controller
-@RequestMapping("restaurante")
+@RequestMapping("/restaurante")
 @CrossOrigin
 public class RestauranteController {
     
@@ -38,6 +40,13 @@ public class RestauranteController {
     public ResponseEntity<?> mostrarRestaurante(){
     var resultado = restauranteService.mostrarRestaurante();
         return ResponseEntity.ok(resultado);
+    }
+
+    //mobile
+
+    @GetMapping("/mobile")
+    public ResponseEntity<List<Restaurante>> listarTodos() {
+        return ResponseEntity.ok(restauranteService.listarTodos());
     }
 
     
