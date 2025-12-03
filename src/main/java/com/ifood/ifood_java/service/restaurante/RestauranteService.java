@@ -61,5 +61,9 @@ public List<Restaurante> mostrarRestaurante() {
     return restauranteRepository.findAllByUsuarioIdUsuario(userId);
 }
 
+//mobile
 
+ public List<Restaurante> listarTodos() {
+        return restauranteRepository.findAll();
+    }
 }
