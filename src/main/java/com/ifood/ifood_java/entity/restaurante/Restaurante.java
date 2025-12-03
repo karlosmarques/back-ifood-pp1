@@ -52,7 +52,6 @@ public class Restaurante {
 
    @OneToOne
    @JoinColumn(name = "id_usuario", nullable = false) 
-   @JsonIgnore
    private Usuario usuario;
 
    
