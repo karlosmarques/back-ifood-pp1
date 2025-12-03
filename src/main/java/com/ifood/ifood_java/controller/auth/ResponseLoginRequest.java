@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ResponseLoginRequest {
     
-    private    String access_token;
+    private    String token;
     private    String token_type;
     private    Long id;
     private    String nome;
