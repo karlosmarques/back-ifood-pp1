@@ -15,7 +15,7 @@ import com.ifood.ifood_java.service.produto.ProdutoService;
 import com.ifood.ifood_java.service.restaurante.RestauranteService;
 
 @Controller
-@RequestMapping("produto")
+@RequestMapping("/produto")
 @CrossOrigin
 public class ProdutosController {
 
