@@ -14,7 +14,7 @@ import com.ifood.ifood_java.service.perfil.PerfilService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("perfil")
+@RequestMapping("/perfil")
 @CrossOrigin
 public class PerfilController {
 
