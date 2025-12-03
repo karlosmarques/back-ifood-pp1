@@ -45,12 +45,15 @@ public class Produtos {
    @Column(name = "ativo")
    private Boolean ativo;
 
+   
+   @ManyToOne(cascade = CascadeType.PERSIST) // cascade para criar a categoria junto se não existir
+   @JoinColumn(name = "id_categoria")
+   private CategoriaProdutos categoria;
+
    @ManyToOne
    @JoinColumn(name = "id_restaurante", nullable = false)
    private Restaurante restaurante;
 
-   @ManyToOne(cascade = CascadeType.PERSIST) // cascade para criar a categoria junto se não existir
-   @JoinColumn(name = "id_categoria")
-   private CategoriaProdutos categoria;
+ 
 
 }
