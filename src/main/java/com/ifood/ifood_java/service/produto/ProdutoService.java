@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ifood.ifood_java.entity.categoria.CategoriaProdutos;
 import com.ifood.ifood_java.entity.produtos.Produtos;
@@ -15,6 +16,7 @@ import com.ifood.ifood_java.repository.CategoriaProdutosRepository;
 import com.ifood.ifood_java.repository.ProdutosRepository;
 import com.ifood.ifood_java.repository.RestauranteRepository;
 import com.ifood.ifood_java.repository.UsuarioRepository;
+import com.ifood.ifood_java.service.upload.UploadService;
 
 @Service
 public class ProdutoService {
@@ -31,10 +33,13 @@ public class ProdutoService {
     @Autowired
     private CategoriaProdutosRepository categoriaProdutosRepository;
 
+        @Autowired
+    private  UploadService uploadService;
 
-    public Produtos criarPordutos(ProdutosRequest request){
 
-        Long userId = Long.parseLong(
+   public Produtos criarProdutos(ProdutosRequest request, MultipartFile imagem){
+
+    Long userId = Long.parseLong(
         SecurityContextHolder.getContext().getAuthentication().getName()
     );
 
@@ -44,7 +49,7 @@ public class ProdutoService {
     Restaurante restaurante = restauranteRepository.findByUsuario(usuario)
                 .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
 
-     CategoriaProdutos categoriaProdutos = categoriaProdutosRepository
+    CategoriaProdutos categoriaProdutos = categoriaProdutosRepository
         .findByNome(request.getCategoria())
         .orElseGet(() -> {
             CategoriaProdutos nova = new CategoriaProdutos();
@@ -52,17 +57,23 @@ public class ProdutoService {
             return categoriaProdutosRepository.save(nova);
         });
 
-        Produtos produtos = new Produtos();
-        produtos.setNome(request.getNome());
-        produtos.setDescricao(request.getDescricao());
-        produtos.setPreco(request.getPreco());
-        produtos.setAtivo(request.getAtivo());
-        produtos.setCategoria(categoriaProdutos);
-        produtos.setRestaurante(restaurante);
+    Produtos produtos = new Produtos();
+    produtos.setNome(request.getNome());
+    produtos.setDescricao(request.getDescricao());
+    produtos.setPreco(request.getPreco());
+    produtos.setAtivo(request.getAtivo());
+    produtos.setCategoria(categoriaProdutos);
+    produtos.setRestaurante(restaurante);
+
     
-        return produtosRepository.save(produtos);
-        
+    if (imagem != null && !imagem.isEmpty()) {
+        String url = uploadService.salvarImagem(imagem); 
+        produtos.setUrlImagem(url);
+    }
+
+    return produtosRepository.save(produtos);
 }
+
 
 public List<Produtos> mostrarProdutos(){
 
