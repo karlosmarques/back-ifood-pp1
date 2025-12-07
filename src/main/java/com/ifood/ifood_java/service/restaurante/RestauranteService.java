@@ -92,6 +92,15 @@ public void deletarRestaurante(Long id) {
     }
 
 
+    public Restaurante buscarPorUsuario(Long idUsuario) {
+
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        return restauranteRepository.findByUsuario(usuario)
+                .orElse(null);
+    }
+
 
 //mobile
 
