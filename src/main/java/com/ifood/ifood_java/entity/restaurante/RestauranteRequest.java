@@ -2,6 +2,10 @@ package com.ifood.ifood_java.entity.restaurante;
 
 
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.ifood.ifood_java.entity.endereco.EnderecoRequest;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -33,6 +37,10 @@ public class RestauranteRequest {
     private String descricao;
 
     private Long categoriaId;
+
+    private EnderecoRequest endereco;
+
+    private Long idUsuario;
 
    
 }
