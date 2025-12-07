@@ -3,12 +3,16 @@ package com.ifood.ifood_java.entity.usuario;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ifood.ifood_java.entity.endereco.Endereco;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,4 +50,9 @@ public class Usuario {
    
    @Column(name = "fone_celular", length = 15) 
    private String foneCelular;  
+
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "endereco_id", referencedColumnName = "id")
+   private Endereco endereco;
+
 }
