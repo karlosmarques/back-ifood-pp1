@@ -3,6 +3,7 @@ import com.ifood.ifood_java.entity.usuario.UsuarioRequest;
 import com.ifood.ifood_java.infra.security.TokenService;
 import com.ifood.ifood_java.controller.auth.LoginRequest;
 import com.ifood.ifood_java.controller.auth.ResponseLoginRequest;
+import com.ifood.ifood_java.entity.endereco.Endereco;
 import com.ifood.ifood_java.entity.usuario.Usuario;
 import com.ifood.ifood_java.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,14 @@ public class AuthService {
             throw new RuntimeException("Email já cadastrado");
         }
 
+        Endereco endereco = new Endereco();
+        endereco.setRua(request.getEndereco().getRua());
+        endereco.setNumero(request.getEndereco().getNumero());
+        endereco.setBairro(request.getEndereco().getBairro());
+        endereco.setCidade(request.getEndereco().getCidade());
+        endereco.setEstado(request.getEndereco().getEstado());
+        endereco.setCep(request.getEndereco().getCep());
+
         Usuario usuario = new Usuario();
         usuario.setNome(request.getNome());
         usuario.setEmail(request.getEmail());
@@ -33,6 +42,7 @@ public class AuthService {
         usuario.setCpf(request.getCpf());
         usuario.setFoneCelular(request.getFone_celular());
         usuario.setDtNascimento((request.getDt_nascimento()));
+        usuario.setEndereco(endereco);
 
         usuarioRepository.save(usuario);
 
