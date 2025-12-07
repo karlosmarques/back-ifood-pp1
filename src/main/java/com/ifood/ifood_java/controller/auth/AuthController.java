@@ -23,16 +23,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthController {
     
-    private final AuthService authServive;
+    private final AuthService authService;
 
     @PostMapping("/registro")
-    public ResponseEntity<String> registrarUsuario(@RequestBody UsuarioRequest request){
-        String resultado = authServive.registrarUsuario(request);
-        return ResponseEntity.ok(resultado);
+    public ResponseEntity<String> criar(@RequestBody UsuarioRequest request) {
+        return ResponseEntity.ok(authService.registrarUsuario(request));
     }
 
 @PostMapping("/login")
 public ResponseEntity<ResponseLoginRequest> login(@RequestBody LoginRequest request) {
-    return ResponseEntity.ok(authServive.login(request));
+    return ResponseEntity.ok(authService.login(request));
 }
 }
