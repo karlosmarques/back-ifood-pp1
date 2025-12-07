@@ -53,6 +53,15 @@ public ResponseEntity<Restaurante> criarRestaurante(@RequestPart("dados") Restau
     return ResponseEntity.noContent().build();
 }
 
+@GetMapping("/usuario/{idUsuario}")
+public ResponseEntity<?> buscarPorUsuario(@PathVariable Long idUsuario) {
+    Restaurante restaurante = restauranteService.buscarPorUsuario(idUsuario);
+    if (restaurante == null) {
+        return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(restaurante);
+}
+
 
     //mobile
 
