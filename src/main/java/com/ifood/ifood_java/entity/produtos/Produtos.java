@@ -2,6 +2,7 @@ package com.ifood.ifood_java.entity.produtos;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ifood.ifood_java.entity.categoria.CategoriaProdutos;
 import com.ifood.ifood_java.entity.restaurante.Restaurante;
 import com.ifood.ifood_java.entity.usuario.Usuario;
@@ -45,12 +46,15 @@ public class Produtos {
    @Column(name = "ativo")
    private Boolean ativo;
 
+   private String urlImagem;
+
    
    @ManyToOne(cascade = CascadeType.PERSIST) // cascade para criar a categoria junto se não existir
    @JoinColumn(name = "id_categoria")
    private CategoriaProdutos categoria;
 
    @ManyToOne
+   @JsonIgnore
    @JoinColumn(name = "id_restaurante", nullable = false)
    private Restaurante restaurante;
 
