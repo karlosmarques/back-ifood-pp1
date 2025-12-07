@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ifood.ifood_java.entity.produtos.Produtos;
 import com.ifood.ifood_java.entity.produtos.ProdutosRequest;
@@ -22,11 +24,12 @@ public class ProdutosController {
     @Autowired
     private ProdutoService produtoService;
 
-    @PostMapping
-    public ResponseEntity<Produtos> criarPordutos(@RequestBody ProdutosRequest request){
-        Produtos produtos = produtoService.criarPordutos(request);
-        return ResponseEntity.ok(produtos);
-    }
+   @PostMapping(value = "/criar", consumes = {"multipart/form-data"})
+public ResponseEntity<Produtos> criarProdutos(@RequestPart("dados") ProdutosRequest request,@RequestPart(value = "imagem", required = false) MultipartFile imagem) {
+    Produtos produto = produtoService.criarProdutos(request, imagem);
+    return ResponseEntity.ok(produto);
+}
+
 
     @GetMapping
     public ResponseEntity<?>mostrarProdutos(){
