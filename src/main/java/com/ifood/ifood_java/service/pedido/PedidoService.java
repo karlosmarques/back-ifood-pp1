@@ -115,11 +115,17 @@ public class PedidoService {
     }
 
    
-    public List<Pedido> historicoRestaurante(Long userId) {
+ public List<Pedido> historicoRestauranteDoUsuario() {
 
-        Restaurante restaurante = restauranteRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+        Long userId = Long.parseLong(
+            SecurityContextHolder.getContext().getAuthentication().getName()
+        );
+        Restaurante restaurante = restauranteRepository
+                .findByUsuarioIdUsuario(userId)
+                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado para este usuário"));
 
-        return pedidoRepository.findAllByRestauranteIdRestaurante(restaurante.getIdRestaurante());
+        return pedidoRepository.findAllByRestauranteIdRestaurante(
+                restaurante.getIdRestaurante()
+        );
     }
 }

@@ -38,11 +38,7 @@ public class PedidoController {
 
     @GetMapping("/historico/restaurante")
     public ResponseEntity<?> historicoRestaurante() {
-
-        Long userId = Long.parseLong(
-            SecurityContextHolder.getContext().getAuthentication().getName()
-        );
-
-        return ResponseEntity.ok(pedidoService.historicoRestaurante(userId));
+        return ResponseEntity.ok(pedidoService.historicoRestauranteDoUsuario());
     }
+    
 }
