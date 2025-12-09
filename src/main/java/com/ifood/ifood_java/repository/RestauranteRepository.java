@@ -13,6 +13,7 @@ Optional<Restaurante> findById(Long idUsuario);
 List<Restaurante> findAllByUsuarioIdUsuario(Long idUsuario);
 Optional<Restaurante> findByUsuario(Usuario usuario);
  Optional<Restaurante> findByUsuarioIdUsuario(Long idUsuario);
+ List<Restaurante> findAll();
 
 
    

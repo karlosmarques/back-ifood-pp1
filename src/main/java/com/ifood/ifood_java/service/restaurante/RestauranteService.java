@@ -107,4 +107,10 @@ public void deletarRestaurante(Long id) {
  public List<Restaurante> listarTodos() {
         return restauranteRepository.findAll();
     }
+
+    //  usado na página de produtos do restaurante
+    public Restaurante buscarPorId(Long id) {
+        return restauranteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+    }
 }
