@@ -11,7 +11,7 @@ import com.ifood.ifood_java.entity.restaurante.Restaurante;
 
 public interface ProdutosRepository extends JpaRepository<Produtos,Long> {
     
-   List<Produtos> findAllByRestauranteIdRestaurante(Long idRestaurante);
+   List<Produtos> findAllByRestauranteIdRestaurante(Long restauranteId);
 
 
 }

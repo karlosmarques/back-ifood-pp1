@@ -70,6 +70,12 @@ public ResponseEntity<?> buscarPorUsuario(@PathVariable Long idUsuario) {
         return ResponseEntity.ok(restauranteService.listarTodos());
     }
 
+    // ROTA DE DETALHE DO RESTAURANTE
+    @GetMapping("/{id}")
+    public Restaurante buscarPorId(@PathVariable Long id) {
+        return restauranteService.buscarPorId(id);
+    }
+
     
 }
 

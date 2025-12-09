@@ -33,62 +33,84 @@ public class ProdutoService {
     @Autowired
     private CategoriaProdutosRepository categoriaProdutosRepository;
 
-        @Autowired
-    private  UploadService uploadService;
+    @Autowired
+    private UploadService uploadService;
 
 
-   public Produtos criarProdutos(ProdutosRequest request, MultipartFile imagem){
+    // ---------------------------------------------------------------------
+    // 🔥 **CRIAR PRODUTO DO RESTAURANTE DO USUÁRIO LOGADO**
+    // ---------------------------------------------------------------------
+    public Produtos criarProdutos(ProdutosRequest request, MultipartFile imagem) {
 
-    Long userId = Long.parseLong(
-        SecurityContextHolder.getContext().getAuthentication().getName()
-    );
+        Long userId = Long.parseLong(
+            SecurityContextHolder.getContext().getAuthentication().getName()
+        );
 
-    Usuario usuario = usuarioRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        Usuario usuario = usuarioRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-    Restaurante restaurante = restauranteRepository.findByUsuario(usuario)
-                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+        Restaurante restaurante = restauranteRepository.findByUsuario(usuario)
+                    .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
 
-    CategoriaProdutos categoriaProdutos = categoriaProdutosRepository
-        .findByNome(request.getCategoria())
-        .orElseGet(() -> {
-            CategoriaProdutos nova = new CategoriaProdutos();
-            nova.setNome(request.getCategoria());
-            return categoriaProdutosRepository.save(nova);
-        });
+        CategoriaProdutos categoriaProdutos = categoriaProdutosRepository
+            .findByNome(request.getCategoria())
+            .orElseGet(() -> {
+                CategoriaProdutos nova = new CategoriaProdutos();
+                nova.setNome(request.getCategoria());
+                return categoriaProdutosRepository.save(nova);
+            });
 
-    Produtos produtos = new Produtos();
-    produtos.setNome(request.getNome());
-    produtos.setDescricao(request.getDescricao());
-    produtos.setPreco(request.getPreco());
-    produtos.setAtivo(request.getAtivo());
-    produtos.setCategoria(categoriaProdutos);
-    produtos.setRestaurante(restaurante);
+        Produtos produtos = new Produtos();
+        produtos.setNome(request.getNome());
+        produtos.setDescricao(request.getDescricao());
+        produtos.setPreco(request.getPreco());
+        produtos.setAtivo(request.getAtivo());
+        produtos.setCategoria(categoriaProdutos);
+        produtos.setRestaurante(restaurante);
 
-    
-    if (imagem != null && !imagem.isEmpty()) {
-        String url = uploadService.salvarImagem(imagem); 
-        produtos.setUrlImagem(url);
+        
+        if (imagem != null && !imagem.isEmpty()) {
+            String url = uploadService.salvarImagem(imagem); 
+            produtos.setUrlImagem(url);
+        }
+
+        return produtosRepository.save(produtos);
     }
 
-    return produtosRepository.save(produtos);
-}
+
+    // ---------------------------------------------------------------------
+    // 🔥 **LISTAR PRODUTOS DO RESTAURANTE DO USUÁRIO LOGADO**
+    // ---------------------------------------------------------------------
+    public List<Produtos> mostrarProdutos() {
+
+        Long userId = Long.parseLong(
+            SecurityContextHolder.getContext().getAuthentication().getName()
+        );
+
+        Usuario usuario = usuarioRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        
+        Restaurante restaurante = restauranteRepository.findByUsuario(usuario)
+            .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+        
+        return produtosRepository.findAllByRestauranteIdRestaurante(restaurante.getIdRestaurante());
+    }
 
 
-public List<Produtos> mostrarProdutos(){
-
-     Long userId = Long.parseLong(
-        SecurityContextHolder.getContext().getAuthentication().getName()
-    );
-    Usuario usuario = usuarioRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-    
-    Restaurante restaurante = restauranteRepository.findByUsuario(usuario)
-        .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
-    
-    return produtosRepository.findAllByRestauranteIdRestaurante(restaurante.getIdRestaurante());
-}
+    // ---------------------------------------------------------------------
+    // 🆕🔥 **LISTAR PRODUTOS DE QUALQUER RESTAURANTE (CLIENTE CLICOU EM UM RESTAURANTE)**
+    // ---------------------------------------------------------------------
+    public List<Produtos> listarProdutosPorRestaurante(Long restauranteId) {
+        return produtosRepository.findAllByRestauranteIdRestaurante(restauranteId);
+    }
 
 
-    
+    // ---------------------------------------------------------------------
+    // 🆕🔥 **DETALHE DO PRODUTO**
+    // ---------------------------------------------------------------------
+    public Produtos buscarProdutoPorId(Long produtoId) {
+        return produtosRepository.findById(produtoId)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+    }
+
 }
