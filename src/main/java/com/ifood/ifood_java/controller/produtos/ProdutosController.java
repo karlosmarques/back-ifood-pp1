@@ -40,10 +40,12 @@ public ResponseEntity<Produtos> criarProdutos(@RequestPart("dados") ProdutosRequ
         return ResponseEntity.ok(resultado);
     }
 
-    @GetMapping("/restaurante/{restauranteId}")
-    public List<Produtos> listarPorRestaurante(@PathVariable Long restauranteId) {
-        return produtoService.listarProdutosPorRestaurante(restauranteId);
-    }
+  @GetMapping("/restaurante/{idRestaurante}")
+public ResponseEntity<List<Produtos>> listarPorRestaurante(@PathVariable Long idRestaurante) {
+    List<Produtos> produtos = produtoService.listarProdutosPorRestaurante(idRestaurante);
+    return ResponseEntity.ok(produtos);
+}
+
 
      @GetMapping("/{produtoId}")
     public Produtos buscarProduto(@PathVariable Long produtoId) {
