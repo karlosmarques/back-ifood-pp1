@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,88 +28,97 @@ public class RestauranteService {
     @Autowired
     private RestauranteRepository restauranteRepository;
 
-    @Autowired 
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private  UploadService uploadService;
+    private UploadService uploadService;
 
     @Autowired
-    private CategoriaRestauranteRepository categoriaRestauranteRepository;;
+    private CategoriaRestauranteRepository categoriaRestauranteRepository;
 
-   public Restaurante criarRestaurante(RestauranteRequest request, MultipartFile imagem) {
-    
-    Long userId = Long.parseLong(
-        SecurityContextHolder.getContext().getAuthentication().getName()
-    );
-
-    Usuario usuario = usuarioRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-    
-    CategoriaRestaurante categoria = categoriaRestauranteRepository.findById(request.getCategoriaId())
-            .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
-
-    Endereco endereco = new Endereco();
-    endereco.setRua(request.getEndereco().getRua());
-    endereco.setNumero(request.getEndereco().getNumero());
-    endereco.setBairro(request.getEndereco().getBairro());
-    endereco.setCidade(request.getEndereco().getCidade());
-    endereco.setEstado(request.getEndereco().getEstado());
-    endereco.setCep(request.getEndereco().getCep());
-
-    Restaurante restaurante = new Restaurante();
-    restaurante.setNome(request.getNome());
-    restaurante.setTelefone(request.getTelefone());
-    restaurante.setCnpj(request.getCnpj());
-    restaurante.setRaio_entrega(request.getRaio_entrega());
-    restaurante.setCategoria(categoria);
-    restaurante.setEndereco(endereco);
-    restaurante.setUsuario(usuario);
-
-     if (imagem != null && !imagem.isEmpty()) {
-            String caminho = uploadService.salvarImagem(imagem);
-            restaurante.setUrlImagem(caminho); 
+    // Obtém o ID do usuário logado, retorna null se não autenticado
+    private Long getLoggedUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getName())) {
+            return null; // usuário não autenticado
         }
-  
-    restauranteRepository.save(restaurante);
+        // Nota: Pressupõe que auth.getName() armazena o ID do usuário como String.
+        return Long.parseLong(auth.getName()); 
+    }
 
-    return restaurante;
-}
+    public Restaurante criarRestaurante(RestauranteRequest request, MultipartFile imagem) {
+        Long userId = getLoggedUserId();
+        if (userId == null) {
+            // Mantendo a exceção neste método, pois a criação DEVE ter um usuário logado.
+            throw new RuntimeException("Usuário não autenticado"); 
+        }
 
-public List<Restaurante> mostrarRestaurante() {
+        Usuario usuario = usuarioRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-    Long userId = Long.parseLong(
-        SecurityContextHolder.getContext().getAuthentication().getName()
-    );
+        CategoriaRestaurante categoria = categoriaRestauranteRepository.findById(request.getCategoriaId())
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
-    return restauranteRepository.findAllByUsuarioIdUsuario(userId);
-}
+        Endereco endereco = new Endereco();
+        endereco.setRua(request.getEndereco().getRua());
+        endereco.setNumero(request.getEndereco().getNumero());
+        endereco.setBairro(request.getEndereco().getBairro());
+        endereco.setCidade(request.getEndereco().getCidade());
+        endereco.setEstado(request.getEndereco().getEstado());
+        endereco.setCep(request.getEndereco().getCep());
 
-public void deletarRestaurante(Long id) {
+        Restaurante restaurante = new Restaurante();
+        restaurante.setNome(request.getNome());
+        restaurante.setTelefone(request.getTelefone());
+        restaurante.setCnpj(request.getCnpj());
+        restaurante.setRaio_entrega(request.getRaio_entrega());
+        restaurante.setCategoria(categoria);
+        restaurante.setEndereco(endereco);
+        restaurante.setUsuario(usuario);
+
+        if (imagem != null && !imagem.isEmpty()) {
+            String caminho = uploadService.salvarImagem(imagem);
+            restaurante.setUrlImagem(caminho);
+        }
+
+        restauranteRepository.save(restaurante);
+
+        return restaurante;
+    }
+
+    /**
+     * @return Uma lista de restaurantes do usuário logado, ou null se não autenticado.
+     */
+    public List<Restaurante> mostrarRestaurante() {
+        Long userId = getLoggedUserId();
+        
+        // MODIFICAÇÃO CHAVE: Retorna null em vez de lançar RuntimeException.
+        if (userId == null) { 
+            return null; // A responsabilidade de retornar o 401 é do Controller.
+        }
+        
+        return restauranteRepository.findAllByUsuarioIdUsuario(userId);
+    }
+
+    public void deletarRestaurante(Long id) {
         if (!restauranteRepository.existsById(id)) {
             throw new RuntimeException("Restaurante não encontrado");
         }
         restauranteRepository.deleteById(id);
     }
 
-
     public Restaurante buscarPorUsuario(Long idUsuario) {
-
         Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
-        return restauranteRepository.findByUsuario(usuario)
-                .orElse(null);
+        return restauranteRepository.findByUsuario(usuario).orElse(null);
     }
 
-
-//mobile
-
- public List<Restaurante> listarTodos() {
+    // mobile
+    public List<Restaurante> listarTodos() {
         return restauranteRepository.findAll();
     }
 
-    //  usado na página de produtos do restaurante
     public Restaurante buscarPorId(Long id) {
         return restauranteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
