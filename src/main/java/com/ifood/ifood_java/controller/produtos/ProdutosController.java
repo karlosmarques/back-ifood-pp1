@@ -46,12 +46,10 @@ public ResponseEntity<List<Produtos>> listarPorRestaurante(@PathVariable Long id
     return ResponseEntity.ok(produtos);
 }
 
-
-     @GetMapping("/{produtoId}")
-    public Produtos buscarProduto(@PathVariable Long produtoId) {
-        return produtoService.buscarProdutoPorId(produtoId);
-    }
-
-
-    
+@GetMapping("/detalhe/{produtoId}")
+public ResponseEntity<Produtos> buscarProduto(@PathVariable Long produtoId) {
+    Produtos produto = produtoService.buscarProdutoPorId(produtoId);
+    return ResponseEntity.ok(produto);
+}
+   
 }

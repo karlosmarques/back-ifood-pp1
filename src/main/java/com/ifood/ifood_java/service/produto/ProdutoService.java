@@ -3,9 +3,11 @@ package com.ifood.ifood_java.service.produto;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.ifood.ifood_java.entity.categoria.CategoriaProdutos;
 import com.ifood.ifood_java.entity.produtos.Produtos;
@@ -109,12 +111,10 @@ public class ProdutoService {
         return produtosRepository.findAllByRestauranteIdRestaurante(restauranteId);
     }
 
-    // ---------------------------------------------------------------------
-    // 🔥 DETALHE DO PRODUTO
-    // ---------------------------------------------------------------------
-    public Produtos buscarProdutoPorId(Long produtoId) {
-        return produtosRepository.findById(produtoId)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
-    }
+public Produtos buscarProdutoPorId(Long produtoId) {
+    return produtosRepository.findById(produtoId)
+            .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+}
+
 
 }
