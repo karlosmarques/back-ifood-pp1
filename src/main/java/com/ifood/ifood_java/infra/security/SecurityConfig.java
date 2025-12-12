@@ -40,6 +40,7 @@ public class SecurityConfig {
                     .requestMatchers("/produtos/**").permitAll()
                     .requestMatchers("/pedidos/**").permitAll()
                     .requestMatchers("/uploads/**").permitAll()
+                    .requestMatchers("/endereco/**").permitAll()
                     .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

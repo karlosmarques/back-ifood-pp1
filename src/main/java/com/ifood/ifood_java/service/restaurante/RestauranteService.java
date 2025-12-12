@@ -86,16 +86,10 @@ public class RestauranteService {
 
         return restaurante;
     }
-
-    /**
-     * @return Uma lista de restaurantes do usuário logado, ou null se não autenticado.
-     */
     public List<Restaurante> mostrarRestaurante() {
         Long userId = getLoggedUserId();
-        
-        // MODIFICAÇÃO CHAVE: Retorna null em vez de lançar RuntimeException.
         if (userId == null) { 
-            return null; // A responsabilidade de retornar o 401 é do Controller.
+            return null; 
         }
         
         return restauranteRepository.findAllByUsuarioIdUsuario(userId);
@@ -112,6 +106,26 @@ public class RestauranteService {
         Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         return restauranteRepository.findByUsuario(usuario).orElse(null);
+    }
+
+    public Restaurante atualizarRestauranteDoUsuario(Restaurante request) {
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Long userId = Long.parseLong(username);
+
+        Usuario usuario = usuarioRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        Restaurante restaurante = restauranteRepository.findByUsuario(usuario)
+                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+
+        restaurante.setNome(request.getNome());
+        restaurante.setTelefone(request.getTelefone());
+        restaurante.setCnpj(request.getCnpj());
+        restaurante.setRaio_entrega(request.getRaio_entrega());
+        restaurante.setUrlImagem(request.getUrlImagem());
+
+        return restauranteRepository.save(restaurante);
     }
 
     // mobile

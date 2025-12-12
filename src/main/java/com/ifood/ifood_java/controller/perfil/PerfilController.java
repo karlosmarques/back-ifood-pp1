@@ -32,7 +32,7 @@ public class PerfilController {
         }
     }
 
-    @PatchMapping
+    @PutMapping("/editar")
     public ResponseEntity<?> atualizarPerfil(@Valid @RequestBody AtualizarPerfilRequest request) {
         try {
             AtualizarPerfilRequest atualizado = perfilService.atualizarPerfil(request);
