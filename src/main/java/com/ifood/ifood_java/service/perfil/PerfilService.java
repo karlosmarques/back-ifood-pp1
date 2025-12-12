@@ -35,28 +35,20 @@ public class PerfilService {
         );
         
     }
-    @Transactional
-    public AtualizarPerfilRequest atualizarPerfil(AtualizarPerfilRequest request) {
-    
-       Long userId = Long.parseLong(
-        SecurityContextHolder.getContext().getAuthentication().getName()
-    );
-        
-         Usuario usuario = usuarioRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    public Usuario atualizarUsuario(Usuario request) {
 
-    if (request.getNome() != null) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Long userId = Long.parseLong(username);
+
+        Usuario usuario = usuarioRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
         usuario.setNome(request.getNome());
-    }
-    if (request.getEmail() != null) {
         usuario.setEmail(request.getEmail());
+        usuario.setCpf(request.getCpf());
+        usuario.setFoneCelular(request.getFoneCelular());
+        usuario.setDtNascimento(request.getDtNascimento());
+
+        return usuarioRepository.save(usuario);
     }
-    
-    Usuario atualizado = usuarioRepository.save(usuario);
-    
-    return new AtualizarPerfilRequest(
-        atualizado.getNome(),
-        atualizado.getEmail()
-    );
-}
 }

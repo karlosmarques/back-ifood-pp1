@@ -5,7 +5,8 @@ import javax.print.DocFlavor.STRING;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
+import com.ifood.ifood_java.entity.usuario.Usuario;
 import com.ifood.ifood_java.entity.usuario.UsuarioRequest;
 import com.ifood.ifood_java.repository.UsuarioRepository;
 import com.ifood.ifood_java.service.perfil.PerfilService;
@@ -32,13 +33,10 @@ public class PerfilController {
         }
     }
 
-    @PutMapping("/editar")
-    public ResponseEntity<?> atualizarPerfil(@Valid @RequestBody AtualizarPerfilRequest request) {
-        try {
-            AtualizarPerfilRequest atualizado = perfilService.atualizarPerfil(request);
-            return ResponseEntity.ok(atualizado);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+   @PutMapping("/editar")
+public ResponseEntity<Usuario> atualizarUsuario( @RequestBody Usuario request) {
+    Usuario usuario = perfilService.atualizarUsuario(request);
+    return ResponseEntity.ok(usuario);
+}
+
 }

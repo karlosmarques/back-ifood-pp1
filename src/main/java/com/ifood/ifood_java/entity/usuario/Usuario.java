@@ -32,7 +32,7 @@ public class Usuario {
    @Column(name = "id_usuario")
    private Long idUsuario;
    
-   @Column(unique = true, nullable = false)
+   @Column(unique = true)
    private String email;
    
    @JsonIgnore
