@@ -9,7 +9,5 @@ import com.ifood.ifood_java.entity.pedido.Pedido;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
    List<Pedido> findByClienteIdUsuario(Long idUsuario);
-
-
     List<Pedido> findAllByRestauranteIdRestaurante(Long restauranteId);
 }
