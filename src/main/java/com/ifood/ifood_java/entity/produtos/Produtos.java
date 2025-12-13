@@ -1,9 +1,11 @@
 package com.ifood.ifood_java.entity.produtos;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ifood.ifood_java.entity.categoria.CategoriaProdutos;
+import com.ifood.ifood_java.entity.pedido.PedidoItem;
 import com.ifood.ifood_java.entity.restaurante.Restaurante;
 import com.ifood.ifood_java.entity.usuario.Usuario;
 
@@ -58,6 +60,8 @@ public class Produtos {
    @JoinColumn(name = "id_restaurante", nullable = false)
    private Restaurante restaurante;
 
- 
+   @OneToMany(mappedBy = "produto", cascade = CascadeType.REMOVE)
+   private List<PedidoItem> itens;
+
 
 }
