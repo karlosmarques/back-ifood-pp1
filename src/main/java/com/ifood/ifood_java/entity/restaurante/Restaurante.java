@@ -1,6 +1,7 @@
 package com.ifood.ifood_java.entity.restaurante;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ifood.ifood_java.entity.categoria.CategoriaRestaurante;
 import com.ifood.ifood_java.entity.endereco.Endereco;
+import com.ifood.ifood_java.entity.pedido.Pedido;
 import com.ifood.ifood_java.entity.produtos.Produtos;
 import com.ifood.ifood_java.entity.usuario.Usuario;
 
@@ -70,5 +72,7 @@ public class Restaurante {
    @JsonIgnore
    private List<Produtos> produtos;
 
-
+   @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
+   @JsonIgnore
+   private List<Pedido> pedidos = new ArrayList<>();
 }
