@@ -15,6 +15,7 @@ public class CategoriaRestaurante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+     private String urlImagem;
     
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
     private List<Restaurante> restaurantes;
