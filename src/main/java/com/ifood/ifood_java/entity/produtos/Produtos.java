@@ -59,7 +59,8 @@ public class Produtos {
    @JsonIgnore
    @JoinColumn(name = "id_restaurante", nullable = false)
    private Restaurante restaurante;
-
+   
+   @JsonIgnore
    @OneToMany(mappedBy = "produto", cascade = CascadeType.REMOVE)
    private List<PedidoItem> itens;
 
