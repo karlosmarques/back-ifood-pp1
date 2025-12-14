@@ -1,6 +1,7 @@
 package com.ifood.ifood_java.controller.pedido;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,11 @@ public class PedidoController {
     public ResponseEntity<?> historicoRestaurante() {
         return ResponseEntity.ok(pedidoService.historicoRestauranteDoUsuario());
     }
-    
+
+    @PutMapping("/{id}/status")
+public ResponseEntity<Void> atualizarStatus( @PathVariable Long id,@RequestBody Map<String, String> body) {
+    pedidoService.atualizarStatus(id, body.get("status"));
+    return ResponseEntity.noContent().build();
+}
+
 }
