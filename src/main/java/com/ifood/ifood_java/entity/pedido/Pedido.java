@@ -26,6 +26,12 @@ public class Pedido {
     private LocalDateTime dataCriacao;
 
     private String status; 
+
+    private String pagamentoStatus;
+
+    private String mercadopagoPreferenceId;
+
+    private String mercadopagoPaymentId;
     
     @ManyToOne
     @JoinColumn(name = "id_cliente")
