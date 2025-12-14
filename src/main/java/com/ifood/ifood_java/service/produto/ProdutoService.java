@@ -38,9 +38,6 @@ public class ProdutoService {
     @Autowired
     private UploadService uploadService;
 
-    // ---------------------------------------------------------------------
-    // 🔥 CRIAR PRODUTO DO RESTAURANTE DO USUÁRIO LOGADO
-    // ---------------------------------------------------------------------
     public Produtos criarProdutos(ProdutosRequest request, MultipartFile imagem) {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -116,5 +113,22 @@ public Produtos buscarProdutoPorId(Long produtoId) {
             .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 }
 
+public Produtos editarProduto(ProdutosRequest request,Long id) {
+    Produtos produto = produtosRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+
+    produto.setNome(request.getNome());
+    produto.setDescricao(request.getDescricao());
+    produto.setPreco(request.getPreco());
+    produto.setAtivo(request.getAtivo());
+
+    return produtosRepository.save(produto);
+}
+
+public void deletarProduto(Long id) {
+    Produtos produto = produtosRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+    produtosRepository.delete(produto);
+}
 
 }
