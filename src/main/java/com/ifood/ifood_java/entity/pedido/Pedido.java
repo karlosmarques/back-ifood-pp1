@@ -27,11 +27,11 @@ public class Pedido {
 
     private String status; 
 
+    @Column(name = "pagamento_status")
     private String pagamentoStatus;
 
-    private String mercadopagoPreferenceId;
-
-    private String mercadopagoPaymentId;
+    @Column(name = "metodo_pagamento")
+    private String metodoPagamento;
     
     @ManyToOne
     @JoinColumn(name = "id_cliente")

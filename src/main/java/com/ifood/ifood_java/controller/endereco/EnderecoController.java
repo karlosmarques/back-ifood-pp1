@@ -27,4 +27,6 @@ public class EnderecoController {
         enderecoService.excluirEndereco();
         return ResponseEntity.ok("Endereço excluído com sucesso");
     }
+
+    
 }
