@@ -53,7 +53,7 @@ public class PedidoService {
         pedido.setCliente(cliente);
         pedido.setRestaurante(restaurante);
         pedido.setDataCriacao(LocalDateTime.now());
-        pedido.setStatus("REALIZADO");
+        pedido.setStatus("EM PREPARO");
 
         List<PedidoItem> itensEntities = new ArrayList<>();
         BigDecimal total = BigDecimal.ZERO;
