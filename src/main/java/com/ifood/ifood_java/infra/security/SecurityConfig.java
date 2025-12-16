@@ -33,6 +33,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers("/auth/forgot-password", "/auth/reset-password").permitAll()
                     .requestMatchers("/perfil/**").permitAll()
                     .requestMatchers("/home").permitAll()
                     .requestMatchers("/categorias/restaurantes").permitAll()

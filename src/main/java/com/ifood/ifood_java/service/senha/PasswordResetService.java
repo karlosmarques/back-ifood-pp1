@@ -22,7 +22,6 @@ public class PasswordResetService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // Solicitar reset
     public void forgotPassword(String email) {
 
         Usuario usuario = usuarioRepository.findByEmail(email)
@@ -33,14 +32,11 @@ public class PasswordResetService {
         token.setUsuario(usuario);
         token.setExpiracao(LocalDateTime.now().plusMinutes(30));
 
-        tokenRepository.save(token);
-
-        //  Simulação de envio de email
+        tokenRepository.save(token);        //  Simulação de envio de email
         System.out.println("LINK DE RESET:");
         System.out.println("http://localhost:3000/resetar-senha?token=" + token.getToken());
     }
 
-    // Resetar senha
     public void resetarSenha(String tokenStr, String novaSenha) {
 
         PasswordResetToken token = tokenRepository.findByToken(tokenStr)
