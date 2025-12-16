@@ -1,5 +1,7 @@
 package com.ifood.ifood_java.controller.auth;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,4 +36,20 @@ public class AuthController {
 public ResponseEntity<ResponseLoginRequest> login(@RequestBody LoginRequest request) {
     return ResponseEntity.ok(authService.login(request));
 }
+
+ @PostMapping("/esqueceu-senha")
+    public ResponseEntity<Void> forgotPassword(@RequestBody Map<String, String> body) {
+        authService.forgotPassword(body.get("email"));
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/trocar-senha")
+    public ResponseEntity<Void> resetPassword(@RequestBody Map<String, String> body) {
+        authService.resetPassword(
+                body.get("token"),
+                body.get("senha")
+        );
+        return ResponseEntity.ok().build();
+    }
+    
 }

@@ -1,6 +1,7 @@
 package com.ifood.ifood_java.entity.usuario;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ifood.ifood_java.entity.endereco.Endereco;
@@ -54,5 +55,9 @@ public class Usuario {
    @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "endereco_id", referencedColumnName = "id")
    private Endereco endereco;
+  
+   private String resetToken;
+
+  private LocalDateTime resetTokenExpira;
 
 }

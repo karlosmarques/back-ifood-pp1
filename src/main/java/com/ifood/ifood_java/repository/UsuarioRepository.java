@@ -2,8 +2,13 @@ package com.ifood.ifood_java.repository;
 
 import com.ifood.ifood_java.entity.usuario.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByEmail(String email);
+    Optional<Usuario> findTop1ByResetToken(String resetToken);
+
+    
 }
