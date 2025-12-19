@@ -27,6 +27,11 @@ public class EnderecoController {
         enderecoService.excluirEndereco();
         return ResponseEntity.ok("Endereço excluído com sucesso");
     }
-
+    
+    @GetMapping("/pegar-endereco")
+    public ResponseEntity<Endereco> pegarEndereco() {
+        Endereco endereco = enderecoService.pegarEndereco();
+        return ResponseEntity.ok(endereco);
+    }
     
 }

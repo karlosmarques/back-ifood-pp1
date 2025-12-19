@@ -74,4 +74,19 @@ public class EnderecoService {
         return Long.parseLong(username);
     }
 
+  public Endereco pegarEndereco() {
+
+        Long userId = Long.parseLong(
+            SecurityContextHolder.getContext().getAuthentication().getName());
+
+        Usuario usuario = usuarioRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (usuario.getEndereco() == null) {
+            throw new RuntimeException("Usuário não possui endereço cadastrado");
+        }
+
+        return usuario.getEndereco();
+    }
+
 }
